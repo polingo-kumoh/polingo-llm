@@ -34,9 +34,20 @@ app.listen(3000, async () => {
 })
 
 app.post("/ask", async (req, res) => {
+    const template = req.body.query;
+
+
+    const prompt = `
+    USER: You are an English grammar analyzer.\n
+    You reply in JSON format with the field 'grammers'\n
+    The user input is given as a sentence, and please analyze the grammar of this sentence. ${template}\n
+    Example Question : 'Ukraine’s frontline brigades are clinging on.'  Example Answer : {'grammers' : [{'grammer' : 'Ukraine’s: This is a possessive noun (Ukraine) with the possessive ending ‘s, indicating ownership.' }]}\n
+    ASSISTANT : {"grammers" : [{"grammer" : "..."}]}
+    `;
+
+    console.log(prompt)
     var result = ""
 
-    const prompt = req.body.query;
 
     await llama.createCompletion({
         nThreads: 4,
