@@ -38,14 +38,14 @@ app.post("/ask", async (req, res) => {
 
 
     const prompt = `
-    USER: You are an English grammar analyzer.\n
-    You reply in JSON format with the field 'grammers'\n
-    The user input is given as a sentence, and please analyze the grammar of this sentence. ${template}\n
-    Example Question : 'Ukraine’s frontline brigades are clinging on.'  Example Answer : {'grammers' : [{'grammer' : 'Ukraine’s: This is a possessive noun (Ukraine) with the possessive ending ‘s, indicating ownership.' }]}\n
-    ASSISTANT : {"grammers" : [{"grammer" : "..."}]}
+System :You are an English grammar analyzer. Analyze the sentence according to [ASSISTANT] below.
+ASSISTANT : 1. You reply in JSON format with the field 'grammers'. 2. Analyze user questions according to their format. 3. Analyze with reference to examples. 4. Individually analyze each major component (nouns, verb phrases, adjectives, etc.) in the sentence, explaining their grammatical role and function within the sentence. 5.For each analyzed element, describe how it contributes to the formation of the sentence's meaning in detail. 
+Example Question : 'Ukraine’s frontline brigades are clinging on.' 
+Example Answer : {"grammers":[{"grammer":"'brigades': A plural noun used to denote large groups or units of soldiers. This term specifically refers to multiple military groups, suggesting a collective effort or action within the context of Ukraine’s military operations."},{"grammer":"'are clinging on': This present continuous tense ('Be + V-ing') represents an ongoing action or state, indicating persistence or continuation. It translates to 'holding on' or 'enduring,' suggesting that the brigades are maintaining their position or persisting without giving up in the face of challenges."}]}
+Format : {"grammers" : [{"grammer" : "..."}]}
+User: ${template}
     `;
 
-    console.log(prompt)
     var result = ""
 
 
