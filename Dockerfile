@@ -1,5 +1,19 @@
-# Python 3.8이 포함된 공식 Python Docker 이미지를 사용합니다.
-FROM python:3.8-slim
+FROM nvidia/cuda:10.2-runtime-ubuntu18.04
+
+RUN apt-get update && apt-cache madison python3-pip
+
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get install -y python3.8 python3-pip
+RUN apt-get install -y libpython3.8-dev
+
+RUN rm /usr/bin/python3 && ln -s /usr/bin/python3.8 /usr/bin/python3
+RUN python3 --version
+RUN pip3 --version
+RUN python3 -m pip install --upgrade pip
+
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 
 # 작업 디렉터리 설정
 WORKDIR /app
